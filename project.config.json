@@ -13,7 +13,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.4.1",
 	"appid": "wxd35ba1d4a85692ab",
-	"projectname": "wechat-my-mall",
+	"projectname": "wechat-mall",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
