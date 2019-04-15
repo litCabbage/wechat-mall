@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="loading-box" wx:if="{{loading}}">
+    <image class="loading-img" src="/images/more/loading.gif" />
+  </view>
+  <block wx:else>
+    <image class="title" src="/images/more/title8.png" />
+    <view class="content">
+      <view class="hd" style="transform: rotateZ({{angle}}deg)">
+        <image class="logo" src="{{userInfo.avatarUrl}}" />
+        <image class="wave" src="/images/more/wave.png" mode="aspectFill" />
+        <image class="wave wave-bg" src="/images/more/wave.png" mode="aspectFill" />
+      </view>
+      <view class="bd">
+        <image class="small-title" src="/images/more/confirm-word1.png" />
+        <view class="confirm-btn" bindtap="gotoIndex">
+          <text>进入店铺</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

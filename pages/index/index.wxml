@@ -1,0 +1,80 @@
+<!-- index.wxml -->
+<view class="container">
+  <!-- 搜索start 到时候做成组件提出去 -->
+  <view class="search-view" style="background: {{scrollTop === 0 ? '-webkit-linear-gradient(top, rgba(105, 195, 170, 1), rgba(105, 195, 170, 0.3))' : (scrollTop < 200 ? 'rgba(105, 195, 170, '+(scrollTop/400 + 0.3) +')' : 'rgba(105, 195, 170, 1)')}}">
+    <view class="search-content">
+      <image class="search-icon" src="/images/search-pic.png"></image>
+      <input class="search-input" placeholder="请输入搜索内容" maxlength="30" confirm-type="search" bindinput="listenerSearchInput" bindconfirm="toSearch" type="text" />
+      <button class="search-btn" bindtap="toSearch">搜索</button>
+    </view>
+  </view>
+  <!-- 搜索end -->
+  <view class="swiper-container">
+    <swiper class="swiper-box" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange" indicator-dots="{{indicator}}" indicator-color="{{rgba(0, 0, 0, .3)}}" indicator-active-color="green">
+      <block wx:for="{{banners}}" wx:key="id">
+        <swiper-item>
+          <image bindtap="tapBanner" data-id="{{item.businessId}}" src="{{item.picUrl}}" class="slide-image" width="750rpx" height="562.5rpx"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+    <!-- 自定义indicator，小程序也自带indicator，看自己需求 -->
+    <!-- <view class="dots">
+      <block wx:for="{{banners}}" wx:key="unique">
+        <view class="dot{{index == swiperCurrent ? ' active': ''}}"></view>
+      </block>
+    </view> -->
+  </view>
+  <!-- 分类start -->
+  <view class="type-container">
+    <scroll-view class="type-navbar" scroll-x="{{true}}">
+      <view class="type-box" wx:for="{{categories}}" wx:key="id">
+        <view id="{{item.id}}" class="type-navbar-item {{activeCategoryId == item.id ? 'type-item-on' : ''}}" bindtap="tabClick">
+          {{item.name}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <!-- 分类end -->
+  <!-- 公告start -->
+  <view class="notice" wx:if="{{noticeList.dataList && noticeList.dataList.length > 0}}">
+    <view class="notice-item-l">公告</view>
+    <swiper class="notice-swiper" vertical="{{true}}" autoplay="{{true}}" circular="{{true}}" interval="3000">
+      <navigator wx:for="{{noticeList.dataList}}" wx:key="id" url="/pages/notice/show?id={{item.id}}" open-type="navigate">
+        <swiper-item>
+          <view class="notice-item-r">{{item.title}}</view>
+        </swiper-item>
+      </navigator>
+    </swiper>
+  </view>
+  <!-- 公告end -->
+  <!-- 促销start -->
+  <view class="coupons" hidden="{{hasNoCoupons}}">
+    <scroll-view class="coupons-scroll" scroll-x="{{true}}">
+      <view class="coupons-item" wx:for="{{coupons}}" wx:key="id" bindtap="receiveCoupon" data-id="{{item.id}}">
+        <view style="font-size: 35rpx;">￥ {{item.moneyMax}}元</view>
+        <view>{{item.name}}</view>
+        <view>满 {{item.moneyHreshold}} 元使用</view>
+        <view wx:if="{{item.dateEndType == 0}}">{{item.dateEnd}} 前有效</view>
+        <view wx:if="{{item.dateEndType == 1}}">领取 {{item.dateEndDays}} 天内有效</view>
+      </view>
+    </scroll-view>
+  </view>
+  <!-- 促销end -->
+  <!-- 商品start -->
+  <view class="goods-container">
+    <view class="goods-box" wx:for="{{goods}}" wx:key="{{id}}" bindtap="toDetailsTap" data-id="{{item.id}}">
+      <view class="img-box">
+        <image src="{{item.pic}}" class="image" mode="aspectFill" lazy-load="{{true}}"></image>
+      </view>
+      <view class="goods-title">{{item.name}}</view>
+      <view style="display: flex;">
+        <view class="goods-price">￥ {{item.minPrice}}</view>
+        <view class="goods-price" wx:if="{{item.originalPrice && item.originalPrice > 0}}" style="coloe: #aaa;text-decoration: line-through;">
+          ￥ {{item.originalPrice}}
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 商品end -->
+  <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view>
+</view>
