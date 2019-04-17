@@ -273,7 +273,7 @@ Page({
   navigateToPayOrder() {
     wx.hideLoading()
     wx.navigateTo({
-      url: '/pages/to-pay-order/index'
+      url: '/pages/to-pay-order/index?orderType=buyCart&pingtuanOpenId='
     })
   },
   deleteSelected() {
